@@ -14,11 +14,9 @@ This initial release of F3 provides very basic capabilities and is limited in sc
 1. The code is configured for a Linux Ubuntu 14 distribution.
 2. The only database support currently implemented is Postgres.
 
-# 
-# Quick Start
+## Quick Start
 
-## 
-# Setting up the VM
+### Setting up the VM
 
 The zip file contains a VMware virtual machine. Unzip all of the files to your virtual machine datastore. Using the VMWare interface, add this virtual machine to your inventory and start the server. The default user name is: user and the password is: password.
 
@@ -32,8 +30,7 @@ Second, the server is configured to use port 5010 for the feed service. If this 
 
 The solution is installed in the root at: /data\_feed. The default directory structure includes five subfolders. The conf folder contains all of the configuration information for the data\_feed application as well as the sample feed definition json files. The sources folder contains all of the sample data for the file and directory feed definition sample json files. The staticfolder is the target storage file location for all of the feeds created in the sample feed definition json files. The log folder is the target log file location for all of the feeds created in the sample feed definition json files. The sock folder is the location for storage of the socket file for communication between Flask, Uwsgi, and Nginx.
 
-# 
-# Setting up feed definition files
+### Setting up feed definition files
 
 A JSON configuration file specifies how to construct each of the feeds provided by the service. There server supports four different feed types:
 
@@ -52,29 +49,23 @@ conf/feed\_def\_database.json
 
 conf/feed\_def\_file.json
 
-## 
-# Shared Parameters
+#### Shared Parameters
 
-## Every feed definition file shares a number of parameters. The parameters unique to each feed type are listed with the example and feed type below. The common parameters shared by all types of feed definitions are:
+Every feed definition file shares a number of parameters. The parameters unique to each feed type are listed with the example and feed type below. The common parameters shared by all types of feed definitions are:
 
-## **feed\_type:** required and must be the keyword specific to the type of feed being created.
+**feed\_type:** required and must be the keyword specific to the type of feed being created.
+    (usage – starting the correct type of feed constructor)
 
-##     (usage – starting the correct type of feed constructor)
+**title:** any descriptive title you would like to use.
+    (usage – descriptive reference saved in the meta data database for referencing this feed in the future)
 
-## **title:** any descriptive title you would like to use.
+**storage\_file:** any folder and file name for storing the scraped data links (the path is relative to the application base folder).
+     (usage – used by scrapy to create the export CSV file where the items are stored)
 
-##     (usage – descriptive reference saved in the meta data database for referencing this feed in the future)
+**log\_file:** any folder and file name for storing the execution log information (the path is relative to the application base folder).
+     (usage: - used by scrapy to record the history of activities, it is cumulative)
 
-## **storage\_file:** any folder and file name for storing the scraped data links (the path is relative to the application base folder).
-
-##     (usage – used by scrapy to create the export CSV file where the items are stored)
-
-## **log\_file:** any folder and file name for storing the execution log information (the path is relative to the application base folder).
-
-##     (usage: - used by scrapy to record the history of activities, it is cumulative)
-
-## 
-# Website
+#### Website
 
 Sample feed definition file contents:
 
@@ -98,28 +89,22 @@ Sample feed definition file contents:
 
   "search\_filter": ""}]}
 
-## **feed\_type:** required and must be the keyword "website" 
+**feed\_type:** required and must be the keyword "website" 
+     (usage – starting the correct type of feed constructor)
 
-##     (usage – starting the correct type of feed constructor)
+**allowed\_domains:** comma separated list of domain names (i.e. "cnn.com" or "cnn.com, msn.com")
+     (usage – provides scrapy a set of domain names that are allowed in the spider execution)
 
-## **allowed\_domains:** comma separated list of domain names (i.e. "cnn.com" or "cnn.com, msn.com")
+**start\_urls:** comma separated list of websites names (i.e. "http://www.cnn.com/" or "http://www.cnn.com, http://www.msn.com")
+     (usage – provides scrapy a set of websites that are to be targeted in the spider execution)
 
-##     (usage – provides scrapy a set of domain names that are allowed in the spider execution)
+**depth\_limit:** integer value indicating the depth to query the websites
+     (usage: - limits scrapy to this number of links of depth when the spider crawls the websites)
 
-## **start\_urls:** comma separated list of websites names (i.e. "http://www.cnn.com/" or "http://www.cnn.com, http://www.msn.com")
+**search\_filter:** regular expression to filter out what types of files to return in the scraping
+     (usage: - limits the returned files to only those found in the regular expression)
 
-##     (usage – provides scrapy a set of websites that are to be targeted in the spider execution)
-
-## **depth\_limit:** integer value indicating the depth to query the websites
-
-##     (usage: - limits scrapy to this number of links of depth when the spider crawls the websites)
-
-## **search\_filter:** regular expression to filter out what types of files to return in the scraping
-
-##     (usage: - limits the returned files to only those found in the regular expression)
-
-## 
-# Database
+#### Database
 
 Sample feed definition file contents:
 
@@ -145,36 +130,28 @@ Sample feed definition file contents:
 
   "query": "select \* from mytable"}]}
 
-## **feed\_type:** required and must be the keyword "database".
+  **feed\_type:** required and must be the keyword "database".
+     (usage – starting the correct type of feed constructor)
 
-##     (usage – starting the correct type of feed constructor)
+ **user:** username for logging into the database.
+     (usage – used by the database connection service to authenticate)
 
-## **user:** username for logging into the database.
+ **db:** database name to access for the feed data.
+    (usage – used by the database connection service to set the target database)
 
-##     (usage – used by the database connection service to authenticate)
+ **table:** table name to access for the feed data..
+     (usage – used by the database connection service to set the target table)
 
-## **db:** database name to access for the feed data.
+ **host:** server name where the database resides.
+     (usage – used by the database connection service to connect to the database service)
 
-##     (usage – used by the database connection service to set the target database)
+ **uri:** postgres connection string.
+     (usage – used by the database connection service to connect to the database service)
 
-## **table:** table name to access for the feed data..
+ **query:** sql query to execute to retrieve feed data from the database.
+     (usage – used by the database connection service to return data from the database for the data feed)
 
-##     (usage – used by the database connection service to set the target table)
-
-## **host:** server name where the database resides.
-
-##     (usage – used by the database connection service to connect to the database service)
-
-## **uri:** postgres connection string.
-
-##     (usage – used by the database connection service to connect to the database service)
-
-## **query:** sql query to execute to retrieve feed data from the database.
-
-##     (usage – used by the database connection service to return data from the database for the data feed)
-
-## 
-# Directory
+#### Directory
 
 Sample feed definition file contents:
 
@@ -202,40 +179,31 @@ Sample feed definition file contents:
 
   "web\_subdirectory": "directory\_feed"}]}
 
-## **feed\_type:** required and must be the keyword "directory".
+ **feed\_type:** required and must be the keyword "directory".
+     (usage – starting the correct type of feed constructor)
 
-##     (usage – starting the correct type of feed constructor)
+ **start\_directory:** directory location to target as the base directory to search.
+     (usage – used by the directory search as the base location from which to start the search)
 
-## **start\_directory:** directory location to target as the base directory to search.
+ **storage\_root:** base directory for all files found in the directory search to be copied for serving through the data feed.
+     (usage – used by the directory search as the base feed location)
 
-##     (usage – used by the directory search as the base location from which to start the search)
+ **storage\_subdirectory:** the subdirectory within the base storage\_root to use for this particular feed.
+     (usage – used by the directory search as the unique folder for this feed)
 
-## **storage\_root:** base directory for all files found in the directory search to be copied for serving through the data feed.
+ **depth\_limit:** integer value indicating the depth to query the websites
+     (usage: - limits scrapy to this number of links of depth when the spider crawls the websites)
 
-##     (usage – used by the directory search as the base feed location)
+ **search\_filter:** regular expression to filter out what types of files to return in the scraping
+     (usage: - limits the returned files to only those found in the regular expression)
 
-## **storage\_subdirectory:** the subdirectory within the base storage\_root to use for this particular feed.
+ **web\_root:** base directory used by the feed service for serving the files in the webserver.
+     (usage – used by the directory search as the base website feed location)
 
-##     (usage – used by the directory search as the unique folder for this feed)
+ **web\_subdirectory:** the subdirectory within the base web\_root to use for this particular feed.
+     (usage – used by the directory search as the unique website folder for this feed)
 
-## **depth\_limit:** integer value indicating the depth to query the websites
-
-##     (usage: - limits scrapy to this number of links of depth when the spider crawls the websites)
-
-## **search\_filter:** regular expression to filter out what types of files to return in the scraping
-
-##     (usage: - limits the returned files to only those found in the regular expression)
-
-## **web\_root:** base directory used by the feed service for serving the files in the webserver.
-
-##     (usage – used by the directory search as the base website feed location)
-
-## **web\_subdirectory:** the subdirectory within the base web\_root to use for this particular feed.
-
-##     (usage – used by the directory search as the unique website folder for this feed)
-
-## 
-# File
+#### File
 
 Sample feed definition file contents:
 
@@ -261,36 +229,28 @@ Sample feed definition file contents:
 
   "web\_subdirectory": "file\_feed"}]}
 
-## **feed\_type:** required and must be the keyword "file".
+ **feed\_type:** required and must be the keyword "file".
+     (usage – starting the correct type of feed constructor)
 
-##     (usage – starting the correct type of feed constructor)
+ **start\_directory:** directory location to target as the base directory to search.
+     (usage – used by the file feed as the base location from which to start the search)
 
-## **start\_directory:** directory location to target as the base directory to search.
+ **storage\_root:** base directory for all files found in the directory search to be copied for serving through the data feed.
+     (usage – used by the file feed as the base feed location)
 
-##     (usage – used by the file feed as the base location from which to start the search)
+ **storage\_subdirectory:** the subdirectory within the base storage\_root to use for this particular feed.
+     (usage – used by the file feed as the unique folder for this feed)
 
-## **storage\_root:** base directory for all files found in the directory search to be copied for serving through the data feed.
+ **file:** name of the file to source
+     (usage: - limits the returned file to the item matching this filename)
 
-##     (usage – used by the file feed as the base feed location)
+ **web\_root:** base directory used by the feed service for serving the files in the webserver.
+     (usage – used by the file feed as the base website feed location)
 
-## **storage\_subdirectory:** the subdirectory within the base storage\_root to use for this particular feed.
+ **web\_subdirectory:** the subdirectory within the base web\_root to use for this particular feed.
+     (usage – used by the file feed as the unique website folder for this feed)
 
-##     (usage – used by the file feed as the unique folder for this feed)
-
-## **file:** name of the file to source
-
-##     (usage: - limits the returned file to the item matching this filename)
-
-## **web\_root:** base directory used by the feed service for serving the files in the webserver.
-
-##     (usage – used by the file feed as the base website feed location)
-
-## **web\_subdirectory:** the subdirectory within the base web\_root to use for this particular feed.
-
-##     (usage – used by the file feed as the unique website folder for this feed)
-
-# 
-# Creating and serving feeds
+### Creating and serving feeds
 
 Now that you have defined the feeds that you want to serve with the JSON feed definition files, the next step is to "initialize" the feeds into the feed server. The current implementation provides a command line interface for "initializing" the feeds, but the code could easily be extended to schedule the commands to execute on a schedule as well.
 
@@ -298,10 +258,9 @@ When the feed\_initializer is executed, the module reads the specified feed defi
 
 Once a feed has been initialized, the feed\_service reads the feed meta data from the Postgres database and serves up the links via a web service which provides access to the feeds.
 
-## 
-# Creating feeds from definitions
+### Creating feeds from definitions
 
-The feed\_initializermodule loads the feed definition file, calls a helper modulefeed\_def\_readerto parse the file and create: WebsiteFeedConstructor , DirectoryFeedConstructor , DatabaseFeedConstructor, instances. Each of these classes inherits from the FeedConstructorclass which provides all common feed functionality. Each constructor will create a feed in the database that correspond to each feed as well as saving a CSV file with the results of the feed construction for use in serving up the Atom feed.
+The feed\_initializer module loads the feed definition file, calls a helper module feed\_def\_reader to parse the file and create: WebsiteFeedConstructor , DirectoryFeedConstructor , DatabaseFeedConstructor, instances. Each of these classes inherits from the FeedConstructorclass which provides all common feed functionality. Each constructor will create a feed in the database that correspond to each feed as well as saving a CSV file with the results of the feed construction for use in serving up the Atom feed.
 
 The command line for creating a feed is the "feed\_initializer.py" file and takes a single argument with the – d . Below, the first example runs the included website scraping sample.
 
@@ -309,15 +268,15 @@ user@ubuntuvm:~/data\_feed$ python feed\_initializer.py –d conf/feed\_def\_web
 
 user@ubuntuvm:~/data\_feed$ python feed\_initializer.py –d 
 
-1. Web Site Feeds.Here,feed\_initializerwill launch a scrapy crawler to assemble the feed files from the data sources. Each item discovered during the crawl (e.g. xls file link) will be stored as a row in a csv file. The crawling process will then create a single feed data base entry that will link to the csv file. The scrapy crawler is defined in modulewebsite\_feed\_constructor. This module is called in a shell invocation inside of feed\_initializer. The modulewebsite\_feed\_constructorcreates the file in which the crawled items are stored. After the process completes,feed\_initializerwrites an entry to the database tableFeed(defined in modulemodels)
+1. Web Site Feeds. Here, feed\_initializer will launch a scrapy crawler to assemble the feed files from the data sources. Each item discovered during the crawl (e.g. xls file link) will be stored as a row in a csv file. The crawling process will then create a single feed data base entry that will link to the csv file. The scrapy crawler is defined in module website\_feed\_constructor. This module is called in a shell invocation inside of feed\_initializer. The module website\_feed\_constructorcreates the file in which the crawled items are stored. After the process completes,feed\_initializer  writes an entry to the database tableFeed(defined in modulemodels)
 
 The entry will have structure
 
   title, root\_uri, items\_url
 
-Wheretitleis the name given the feed,root\_urlwill be the url of the root of the page anditems\_urlis the location of the file in which the items are stored.
+Where title is the name given the feed, root\_url will be the url of the root of the page and items\_url is the location of the file in which the items are stored.
 
-1. Directory Feeds.Here,feed\_initializerwill launch a process in which an instance of DirectoryFeedConstructorruns to construct a csv that lists the contents of a specified directory. After the process completes,feed\_initializerwrites an entry to the database tableFeed(defined in modulemodels)
+1. Directory Feeds. Here, feed\_initializer will launch a process in which an instance of DirectoryFeedConstructor runs to construct a csv that lists the contents of a specified directory. After the process completes, feed\_initializer writes an entry to the database tableFeed(defined in modulemodels)
 
 The entry will have structure
 
@@ -337,8 +296,7 @@ The entry will have structure
 
 where the database\_source is of the form database:table. For the time being, the interface only supports postgres, but can be readily extended to support other databases supported by the PythonSQLAlchemylibrary.
 
-## 
-# Accessing the feed data
+### Accessing the feed data
 
 The user gets a listing of the feeds by using thefeedsGET query. For example, if the site is on home.com,
 
