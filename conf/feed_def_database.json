@@ -1,0 +1,12 @@
+{"feeds":
+[{"feed_type" : "database",
+    "title": "SampleServer",
+    "storage_file": "/data_feed/static/db.csv",
+    "log_file": "/data_feed/log/log/db.log",
+    "user": "user",
+    "db": "public",
+    "table": "mytable",
+    "host": "localhost",
+    "uri": "postgres://user:password@localhost",
+    "query": "select * from mytable"}]}
+    

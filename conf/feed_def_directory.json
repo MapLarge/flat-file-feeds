@@ -1,0 +1,12 @@
+{"feeds":
+[{"feed_type" : "directory",
+    "title": "SampleServer",
+    "storage_file": "static/directory.csv",
+    "log_file": "log/directory.log",
+    "start_directory": "/data_feed/sources",
+    "storage_root": "/data_feed/static",
+    "storage_subdirectory": "./directory_feed",
+    "search_filter" : ".*\\.pdf",
+    "depth_limit": "2",
+    "web_root": "http://localhost/data",
+    "web_subdirectory": "directory_feed"}]}

@@ -1,0 +1,11 @@
+{"feeds":
+[{"feed_type" : "website",
+    "name": "Web Name",
+    "title": "Web Title",
+    "storage_file": "static/website.csv",
+    "log_file": "log/website.log",
+    "allowed_domains": "msn.com",
+    "start_urls": "http://www.msn.com/",
+    "depth_limit": "4",
+    "search_filter": ""}]}
+

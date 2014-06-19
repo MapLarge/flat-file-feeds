@@ -1,0 +1,12 @@
+{"feeds":
+[{"feed_type" : "file",
+    "title": "SampleServer",
+    "storage_file": "static/file.csv",
+    "log_file": "log/file.log",
+    "start_directory" : "/data_feed/sources",
+    "storage_root": "/data_feed/static",
+    "storage_subdirectory": "./file_feed",
+    "file" : "filesample.csv",
+    "web_root": "http://localhost/data",
+    "web_subdirectory": "file_feed"}]}
+
