@@ -69,36 +69,27 @@ Every feed definition file shares a number of parameters. The parameters unique 
 
 Sample feed definition file contents:
 
-{"feeds":
+    {"feeds":
+        [{"feed\_type" : "website",
+          "name": "Web Name",
+          "title": "Web Title",
+          "storage\_file": "static/website.csv",
+          "log\_file": "log/website.log",
+          "allowed\_domains": "msn.com",
+          "start\_urls": "http://www.msn.com/",
+          "depth\_limit": "4",
+          "search\_filter": ""}]}
 
-[{"feed\_type" : "website",
-
-  "name": "Web Name",
-
-  "title": "Web Title",
-
-  "storage\_file": "static/website.csv",
-
-  "log\_file": "log/website.log",
-
-  "allowed\_domains": "msn.com",
-
-  "start\_urls": "http://www.msn.com/",
-
-  "depth\_limit": "4",
-
-  "search\_filter": ""}]}
-
-**feed\_type:** required and must be the keyword "website" 
+  **feed\_type:** required and must be the keyword "website" 
      (usage – starting the correct type of feed constructor)
 
-**allowed\_domains:** comma separated list of domain names (i.e. "cnn.com" or "cnn.com, msn.com")
+  **allowed\_domains:** comma separated list of domain names (i.e. "cnn.com" or "cnn.com, msn.com")
      (usage – provides scrapy a set of domain names that are allowed in the spider execution)
 
-**start\_urls:** comma separated list of websites names (i.e. "http://www.cnn.com/" or "http://www.cnn.com, http://www.msn.com")
+  **start\_urls:** comma separated list of websites names (i.e. "http://www.cnn.com/" or "http://www.cnn.com, http://www.msn.com")
      (usage – provides scrapy a set of websites that are to be targeted in the spider execution)
 
-**depth\_limit:** integer value indicating the depth to query the websites
+  **depth\_limit:** integer value indicating the depth to query the websites
      (usage: - limits scrapy to this number of links of depth when the spider crawls the websites)
 
 **search\_filter:** regular expression to filter out what types of files to return in the scraping
@@ -108,27 +99,17 @@ Sample feed definition file contents:
 
 Sample feed definition file contents:
 
-{"feeds":
-
-[{"feed\_type" : "database",
-
-  "title": "SampleServer",
-
-  "storage\_file": "/data\_feed/static/db.csv",
-
-  "log\_file": "/data\_feed/log/log/db.log",
-
-  "user": "user",
-
-  "db": "public",
-
-  "table": "mytable",
-
-  "host": "localhost",
-
-  "uri": "postgres://user:password@localhost",
-
-  "query": "select \* from mytable"}]}
+    {"feeds":
+        [{"feed\_type" : "database",
+          "title": "SampleServer",
+          "storage\_file": "/data_feed/static/db.csv",
+          "log\_file": "/data\_feed/log/log/db.log",
+          "user": "user",
+          "db": "public",
+          "table": "mytable",
+          "host": "localhost",
+          "uri": "postgres://user:password@localhost",
+          "query": "select \* from mytable"}]}
 
   **feed\_type:** required and must be the keyword "database".
      (usage – starting the correct type of feed constructor)
@@ -155,29 +136,18 @@ Sample feed definition file contents:
 
 Sample feed definition file contents:
 
-{"feeds":
-
-[{"feed\_type" : "directory",
-
-  "title": "SampleServer",
-
-  "storage\_file": "static/directory.csv",
-
-  "log\_file": "log/directory.log",
-
-  "start\_directory": "/data\_feed/sources",
-
-  "storage\_root": "/data\_feed/static",
-
-  "storage\_subdirectory": "./directory\_feed",
-
-  "search\_filter" : ".\*\\.pdf",
-
-  "depth\_limit": "2",
-
-  "web\_root": "http://localhost/data",
-
-  "web\_subdirectory": "directory\_feed"}]}
+    {"feeds":
+        [{"feed\_type" : "directory",
+          "title": "SampleServer",
+          "storage\_file": "static/directory.csv",
+          "log\_file": "log/directory.log",
+          "start\_directory": "/data\_feed/sources",
+          "storage\_root": "/data\_feed/static",
+          "storage\_subdirectory": "./directory\_feed",
+          "search\_filter" : ".\*\\.pdf",
+          "depth\_limit": "2",
+          "web\_root": "http://localhost/data",
+          "web\_subdirectory": "directory\_feed"}]}
 
  **feed\_type:** required and must be the keyword "directory".
      (usage – starting the correct type of feed constructor)
@@ -207,28 +177,18 @@ Sample feed definition file contents:
 
 Sample feed definition file contents:
 
-{"feeds":
-
-[{"feed\_type" : "file",
-
-  "title": "SampleServer",
-
-  "storage\_file": "static/file.csv",
-
-  "log\_file": "log/file.log",
-
-  "start\_directory" : "/data\_feed/sources",
-
-  "storage\_root": "/data\_feed/static",
-
-  "storage\_subdirectory": "./file\_feed",
-
-  "file" : "filesample.csv",
-
-  "web\_root": "http://localhost/data",
-
-  "web\_subdirectory": "file\_feed"}]}
-
+    {"feeds":
+        [{"feed\_type" : "file",
+          "title": "SampleServer",
+          "storage\_file": "static/file.csv",
+          "log\_file": "log/file.log",
+          "start\_directory" : "/data\_feed/sources",
+          "storage\_root": "/data\_feed/static",
+          "storage\_subdirectory": "./file\_feed",
+          "file" : "filesample.csv",
+          "web\_root": "http://localhost/data",
+          "web\_subdirectory": "file\_feed"}]}
+  
  **feed\_type:** required and must be the keyword "file".
      (usage – starting the correct type of feed constructor)
 
@@ -264,9 +224,9 @@ The feed\_initializer module loads the feed definition file, calls a helper modu
 
 The command line for creating a feed is the "feed\_initializer.py" file and takes a single argument with the – d . Below, the first example runs the included website scraping sample.
 
-user@ubuntuvm:~/data\_feed$ python feed\_initializer.py –d conf/feed\_def\_website.json
+    user@ubuntuvm:~/data\_feed$ python feed\_initializer.py –d conf/feed\_def\_website.json
 
-user@ubuntuvm:~/data\_feed$ python feed\_initializer.py –d 
+    user@ubuntuvm:~/data\_feed$ python feed\_initializer.py –d 
 
 1. Web Site Feeds. Here, feed\_initializer will launch a scrapy crawler to assemble the feed files from the data sources. Each item discovered during the crawl (e.g. xls file link) will be stored as a row in a csv file. The crawling process will then create a single feed data base entry that will link to the csv file. The scrapy crawler is defined in module website\_feed\_constructor. This module is called in a shell invocation inside of feed\_initializer. The module website\_feed\_constructorcreates the file in which the crawled items are stored. After the process completes,feed\_initializer  writes an entry to the database tableFeed(defined in modulemodels)
 
@@ -288,7 +248,7 @@ For directory feed entries, the convention is to link each directory line to a h
 
 By convention the definition of the file feed prescribes where to place the files stored by a particular directory feed and where to serve them from
 
-1. Database Feeds. Here,feed\_initializerwill launch a process in which an instance ofDatabaseFeedConstructorruns to construct a csv that lists the contents of a query specified in the configuration file. After the process completes,feed\_initializerwrites an entry to the database tableFeed(defined in modulemodels)
+1. Database Feeds. Here,feed\_initializerwill launch a process in which an instance ofDatabaseFeedConstructorruns to construct a csv that lists the contents of a query specified in the configuration file. After the process completes, feed\_initializer writes an entry to the database table Feed (defined in modulemodels)
 
 The entry will have structure
 
