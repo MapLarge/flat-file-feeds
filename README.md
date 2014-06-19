@@ -1,3 +1,5 @@
+![F3 Logo](http://maplarge-public.s3.amazonaws.com/vm/flat-file-feeds/Flat-File-Feeds-logo/Flat-File-Feeds-logo-WITH-shadow-184-x-241.png)
+
 **F3 - Flat File Feeds -** Simple Bulk Data Sharing
 
 **Bulk Sharing:** Engineering teams often need to exchange data in bulk. The the Flat File Feeds api, or "F3" for short, defines a basic set of utilities that allow organizations to rapidly bring together and share data stores in a standardized central location. The service is intended for groups that want a simple low cost way to exchange data that may be located in "hard to reach" places: web sites that require some degree of wrangling/scraping to access, corporate databases that require additional permissions, or legacy clients to access. 
