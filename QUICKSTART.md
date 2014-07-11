@@ -16,6 +16,10 @@ This initial release of F3 provides very basic capabilities and is limited in sc
 
 ## Quick Start
 
+### Download the VM
+
+Download the zip file [MapLargeDataFeed-v1.zip](http://maplarge-public.s3.amazonaws.com/vm/flat-file-feeds/MapLargeDataFeed-v1.zip) containing the VMWare virtual machine image. 
+
 ### Setting up the VM
 
 The zip file contains a VMware virtual machine. Unzip all of the files to your virtual machine datastore. Using the VMWare interface, add this virtual machine to your inventory and start the server. The default user name is: user and the password is: password.
